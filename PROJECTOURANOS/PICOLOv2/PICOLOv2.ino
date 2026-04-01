@@ -33,13 +33,13 @@ _____________________________________________________________
 
 // Config variables.
 //Geiger counter
-#define GEIGER_PIN 28
+#define GEIGER_PIN 9
 
 bool usingM8N = true; // true for M8N, false for M9N
 
 // File header. Edit to add columns for other sensors.
 
-String header = "hh:mm:ss,T(min),T(s),T(ms),Counts/Cycle,Totalhits,Hits/Second,Methane(V),Hz,Batt (V),Fix Type,PVT,Sats,Date,Time,Lat,Lon,Alt(Ft),Alt(M),HorizAccuracy(MM),VertAccuracy(MM),VertVel(Ft/S),VertVel(M/S),ECEFstat,ECEFX(M),ECEFY(M),ECEFZ(M),NedVelNorth(M/S),NedVelEast(M/S),NedVelDown(M/S),GndSpd(M/S),Head(Deg),PDOP,ExtT(F),ExtT(C),ExtT(RK),IntT(F),IntT(C),IntT(RK),Pa,kPa,ATM,PSI,density(kg/m^3),MSTemp(C),MSTemp(F),MSTemp(RK),MS Alt SL(Ft), MS Alt SL(M),MS Alt Rel(Ft),MS Alt Rel(M),VertVel(ft/s),VertVel(m/s),Accel(x),Accel(y),Accel(z),Deg/S(x),Deg/S(y),Deg/S(z),Ori(x),Ori(y),Ori(z),Mag_T(x),Mag_T(y),Mag_T(z)z,Version:" + String(VERSION);
+String header = "hh:mm:ss,T(min),T(s),T(ms),Counts/Cycle,Totalhits,Hits/Second,Methane(V),ServoOutput,Servo(V),ServoDeg,Hz,Batt (V),Fix Type,PVT,Sats,Date,Time,Lat,Lon,Alt(Ft),Alt(M),HorizAccuracy(MM),VertAccuracy(MM),VertVel(Ft/S),VertVel(M/S),ECEFstat,ECEFX(M),ECEFY(M),ECEFZ(M),NedVelNorth(M/S),NedVelEast(M/S),NedVelDown(M/S),GndSpd(M/S),Head(Deg),PDOP,ExtT(F),ExtT(C),ExtT(RK),IntT(F),IntT(C),IntT(RK),Pa,kPa,ATM,PSI,density(kg/m^3),MSTemp(C),MSTemp(F),MSTemp(RK),MS Alt SL(Ft), MS Alt SL(M),MS Alt Rel(Ft),MS Alt Rel(M),VertVel(ft/s),VertVel(m/s),Accel(x),Accel(y),Accel(z),Deg/S(x),Deg/S(y),Deg/S(z),Ori(x),Ori(y),Ori(z),Mag_T(x),Mag_T(y),Mag_T(z)z,Version:" + String(VERSION);
 
 void setup() {
 
@@ -67,47 +67,56 @@ void loop() {
     data = "";
     OLEDstr = "";
     
-    data.concat(HHMMSS);
-    data.concat(",");
-    data.concat(String(nowTimeMin));
-    data.concat(",");
-    data.concat(String(nowTimeS));
-    data.concat(",");
-    data.concat(String(nowTimeMS));
-    data.concat(",");
+    // data.concat(HHMMSS);
+    // data.concat(",");
+    // data.concat(String(nowTimeMin));
+    // data.concat(",");
+    // data.concat(String(nowTimeS));
+    // data.concat(",");
+    // data.concat(String(nowTimeMS));
+    // data.concat(",");
     //Geiger
-    data.concat(String(hitsPerCycle));
-    data.concat(",");
-    data.concat(String(totHits));
-    data.concat(",");
-    data.concat(String(hitsPerSec));
-    data.concat(",");
+    // data.concat(String(hitsPerCycle));
+    // data.concat(",");
+    // data.concat(String(totHits));
+    // data.concat(",");
+    // data.concat(String(hitsPerSec));
+    // data.concat(",");
     //MQ9B
-    data.concat(String(mq9b_sensor_voltage));
+    // data.concat(String(mq9b_sensor_voltage));
+    // data.concat(",");
+
+    //SERVO
+    data.concat(String(raw_servo_adc));
+    data.concat(",");
+    data.concat(String(servoFeedbackVolts));
+    data.concat(",");
+    data.concat(servoActualAngle);
     data.concat(",");
 
-    data.concat(String(freq));
-    data.concat(",");
-    data.concat(String(Volt));
-    data.concat(",");
-    data.concat(fixTypeGPS);
-    data.concat(",");
-    data.concat(String(pvtStatus));
-    data.concat(",");
-    data.concat(String(SIV));
-    data.concat(",");
-    data.concat(String(gpsMonth));
-    data.concat("/");
-    data.concat(String(gpsDay));
-    data.concat("/");
-    data.concat(String(gpsYear));
-    data.concat(",");
-    data.concat(String(gpsHour));
-    data.concat(":");
-    data.concat(String(gpsMinute));
-    data.concat(":");
-    data.concat(String(gpsSecond));
-    data.concat(".");
+
+    // data.concat(String(freq));
+    // data.concat(",");
+    // data.concat(String(Volt));
+    // data.concat(",");
+    // data.concat(fixTypeGPS);
+    // data.concat(",");
+    // data.concat(String(pvtStatus));
+    // data.concat(",");
+    // data.concat(String(SIV));
+    // data.concat(",");
+    // data.concat(String(gpsMonth));
+    // data.concat("/");
+    // data.concat(String(gpsDay));
+    // data.concat("/");
+    // data.concat(String(gpsYear));
+    // data.concat(",");
+    // data.concat(String(gpsHour));
+    // data.concat(":");
+    // data.concat(String(gpsMinute));
+    // data.concat(":");
+    // data.concat(String(gpsSecond));
+    // data.concat(".");
 
     if (gpsMillisecond < 10) {
       data.concat("00");

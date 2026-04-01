@@ -109,13 +109,16 @@ void systemSetup() {
   pinMode(MQ9B_PIN, INPUT);
 
     //SERVO
-  //flightServo.attach(SERVO_PIN);
-  //flightServo.write(0); // Set to 0 degrees
-  //delay(1000);
-  //Serial.println("Servo Attached");
-  //flightServo.write(90); // Set to 90 degrees
-  //delay(1000);
-  //flightServo.write(0); // Set to 0 degrees
+    pinMode(SERVO_FEEDBACK_PIN, INPUT);
+
+  flightServo.attach(SERVO_PIN);
+  flightServo.write(0); // Set to 0 degrees
+  delay(1000);
+  Serial.println("Servo Attached");
+  flightServo.write(90); // Set to 90 degrees
+  delay(1000);
+  flightServo.write(0); // Set to 0 degrees
+ 
 
 //SGP40
   if (sgp40.begin()) {
@@ -201,6 +204,34 @@ void systemUpdate(){
   //Update SGP40
   //VOC Index from 0 to 500 (100 is standard clean air)
   voc_index = sgp40.getVOCindex();
+
+  //SERVO
+  raw_servo_adc = analogRead(SERVO_FEEDBACK_PIN); //read voltage
+  servoFeedbackVolts = raw_servo_adc * (3.3 / 1023.0); // reading to voltage
+  //calibration
+  float minVolts = 0.5; // voltage at 0
+  float maxVolts = 2.5; // voltage at 180
+  
+  // calculate the physical angle
+  servoFeedbackVolts = constrain(servoFeedbackVolts, minVolts, maxVolts);
+  servoActualAngle = (servoFeedbackVolts - minVolts) * (180.0 / (maxVolts - minVolts));
+
+
+  // rotate
+  if (nowTimeMS - prevServoTime >= servoInterval) {
+    prevServoTime = nowTimeMS; // reset timer
+    
+    // toggle position
+    servoAt90 = !servoAt90; 
+    
+    if (servoAt90) {
+      flightServo.write(90);
+    } else {
+      flightServo.write(0);
+    }
+  }
+
+  
 
 }
 

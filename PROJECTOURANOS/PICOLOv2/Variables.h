@@ -154,16 +154,23 @@ double hitsPerSec = 0;
 int hitsPerCycle = 0;
 
 //MQ9B
-#define MQ9B_PIN 6
+#define MQ9B_PIN 28
 int mq9b_raw = 0;
 float mq9b_pico_voltage = 0.0;
 float mq9b_sensor_voltage = 0.0;
 
 //SERVO
-#define SERVO_PIN 28
+#define SERVO_PIN 6
 Servo flightServo; 
 int servoPosition = 0;
+#define SERVO_FEEDBACK_PIN 27
+int raw_servo_adc = 0;
+float servoFeedbackVolts = 0.0;
+float servoActualAngle = 0.0;
+unsigned long prevServoTime = 0;
+const unsigned long servoInterval = 300000;
 
+bool servoAt90 = false;
 //SGP40
 SGP40 sgp40;
 int voc_index = 0;
