@@ -231,7 +231,16 @@ void systemUpdate(){
     }
   }
 
+  //OZONE
+  // read analog value
+  raw_o3_vgas = analogRead(O3_VGAS_PIN);
+  raw_o3_vref = analogRead(O3_VREF_PIN);
+  raw_o3_vtemp = analogRead(O3_VTEMP_PIN);
   
+  // convert to voltage
+  o3_vgas_volts = raw_o3_vgas * (3.3 / 1023.0);
+  o3_vref_volts = raw_o3_vref * (3.3 / 1023.0);
+  o3_vtemp_volts = raw_o3_vtemp * (3.3 / 1023.0);
 
 }
 

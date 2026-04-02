@@ -175,3 +175,15 @@ bool servoAt90 = false;
 SGP40 sgp40;
 int voc_index = 0;
 
+//OZONE
+#define O3_VGAS_PIN 26// change pin
+#define O3_VREF_PIN 27// change pin
+#define O3_VTEMP_PIN 28// change pin
+int raw_o3_vgas = 0;
+int raw_o3_vref = 0;
+int raw_o3_vtemp = 0;
+float o3_vgas_volts = 0.0;
+float o3_vref_volts = 0.0;
+float o3_vtemp_volts = 0.0;
+
+
