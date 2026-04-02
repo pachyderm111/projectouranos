@@ -113,10 +113,10 @@ void systemSetup() {
 
   flightServo.attach(SERVO_PIN);
   flightServo.write(0); // Set to 0 degrees
-  delay(1000);
+  delay(5000);
   Serial.println("Servo Attached");
   flightServo.write(90); // Set to 90 degrees
-  delay(1000);
+  delay(5000);
   flightServo.write(0); // Set to 0 degrees
  
 

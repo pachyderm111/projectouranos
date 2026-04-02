@@ -160,7 +160,7 @@ float mq9b_pico_voltage = 0.0;
 float mq9b_sensor_voltage = 0.0;
 
 //SERVO
-#define SERVO_PIN 6
+#define SERVO_PIN 10
 Servo flightServo; 
 int servoPosition = 0;
 #define SERVO_FEEDBACK_PIN 27
@@ -168,7 +168,7 @@ int raw_servo_adc = 0;
 float servoFeedbackVolts = 0.0;
 float servoActualAngle = 0.0;
 unsigned long prevServoTime = 0;
-const unsigned long servoInterval = 300000;
+const unsigned long servoInterval = 5000;  // 5 min = 300000
 
 bool servoAt90 = false;
 //SGP40
