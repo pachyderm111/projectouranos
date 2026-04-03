@@ -106,7 +106,7 @@ void systemSetup() {
   */
 
     //MQ-9B
-  pinMode(MQ9B_PIN, INPUT);
+    //pinMode(MQ9B_PIN, INPUT);
 
     //SERVO
     pinMode(SERVO_FEEDBACK_PIN, INPUT);
@@ -195,11 +195,11 @@ void systemUpdate(){
   digitalWrite(LOOP_LED_PIN, HIGH);
 
   //MQ-9B
-  mq9b_raw = analogRead(MQ9B_PIN);
+  //mq9b_raw = analogRead(MQ9B_PIN);
   //convert voltage (3.3v input pin)
-  mq9b_pico_voltage = mq9b_raw * (3.3 / 1023.0);
+  //mq9b_pico_voltage = mq9b_raw * (3.3 / 1023.0);
   //convert back (5v) -- voltage divider
-  mq9b_sensor_voltage = mq9b_pico_voltage * 1.5;
+  //mq9b_sensor_voltage = mq9b_pico_voltage * 1.5;
 
   //Update SGP40
   //VOC Index from 0 to 500 (100 is standard clean air)

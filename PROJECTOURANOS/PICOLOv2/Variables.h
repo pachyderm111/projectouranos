@@ -154,10 +154,10 @@ double hitsPerSec = 0;
 int hitsPerCycle = 0;
 
 //MQ9B
-#define MQ9B_PIN 28
-int mq9b_raw = 0;
-float mq9b_pico_voltage = 0.0;
-float mq9b_sensor_voltage = 0.0;
+//#define MQ9B_PIN 28 //change pin
+//int mq9b_raw = 0;
+//float mq9b_pico_voltage = 0.0;
+//float mq9b_sensor_voltage = 0.0;
 
 //SERVO
 #define SERVO_PIN 10

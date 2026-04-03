@@ -75,6 +75,7 @@ void loop() {
     // data.concat(",");
     // data.concat(String(nowTimeMS));
     // data.concat(",");
+    
     //Geiger
     // data.concat(String(hitsPerCycle));
     // data.concat(",");
@@ -82,6 +83,7 @@ void loop() {
     // data.concat(",");
     // data.concat(String(hitsPerSec));
     // data.concat(",");
+    
     //MQ9B
     // data.concat(String(mq9b_sensor_voltage));
     // data.concat(",");
