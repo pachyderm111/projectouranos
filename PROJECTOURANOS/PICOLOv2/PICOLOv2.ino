@@ -54,7 +54,7 @@ void loop1(){
   if(digitalRead(GEIGER_PIN) == HIGH){
     hits++;
   }
-  delayMicroseconds(350);
+  delayMicroseconds(250);
 }
 
 void loop() {
@@ -77,12 +77,12 @@ void loop() {
     // data.concat(",");
     
     //Geiger
-    // data.concat(String(hitsPerCycle));
-    // data.concat(",");
-    // data.concat(String(totHits));
-    // data.concat(",");
-    // data.concat(String(hitsPerSec));
-    // data.concat(",");
+    data.concat(String(hitsPerCycle));
+    data.concat(",");
+    data.concat(String(totHits));
+    data.concat(",");
+    data.concat(String(hitsPerSec));
+    data.concat(",");
     
     //MQ9B
     // data.concat(String(mq9b_sensor_voltage));
@@ -95,6 +95,9 @@ void loop() {
     data.concat(",");
     data.concat(String(servoActualAngle));
     data.concat(",");
+
+    //SGP40
+    
 
     //OZONE
     data.concat(String(raw_o3_vgas));

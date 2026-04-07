@@ -167,17 +167,19 @@ int servoPosition = 0;
 int raw_servo_adc = 0;
 float servoFeedbackVolts = 0.0;
 float servoActualAngle = 0.0;
+float minVolts = 0.0;
+float maxVolts = 0.0;
 unsigned long prevServoTime = 0;
 const unsigned long servoInterval = 5000;  // 5 min = 300000
-
 bool servoAt90 = false;
+
 //SGP40
 SGP40 sgp40;
 int voc_index = 0;
 
 //OZONE
-#define O3_VGAS_PIN 26// change pin
-#define O3_VREF_PIN 27// change pin
+#define O3_VGAS_PIN 28// change pin
+#define O3_VREF_PIN 28// change pin
 #define O3_VTEMP_PIN 28// change pin
 int raw_o3_vgas = 0;
 int raw_o3_vref = 0;

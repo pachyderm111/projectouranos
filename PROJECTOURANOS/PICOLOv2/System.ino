@@ -111,13 +111,43 @@ void systemSetup() {
     //SERVO
     pinMode(SERVO_FEEDBACK_PIN, INPUT);
 
-  flightServo.attach(SERVO_PIN);
-  flightServo.write(0); // Set to 0 degrees
-  delay(5000);
-  Serial.println("Servo Attached");
-  flightServo.write(90); // Set to 90 degrees
-  delay(5000);
-  flightServo.write(0); // Set to 0 degrees
+  // flightServo.attach(SERVO_PIN);
+  // flightServo.write(0); // Set to 0 degrees
+  // delay(5000);
+  // Serial.println("Servo Attached");
+  // flightServo.write(90); // Set to 90 degrees
+  // delay(5000);
+  // flightServo.write(0); // Set to 0 degrees
+
+  if (flightServo.attached()) {
+    Serial.println("Servo Online and Attached!");
+    printOLED("Servo Online!", true);
+    
+    Serial.println("Calibrating Servo...");
+    
+    // set to zero
+    flightServo.write(0); 
+    delay(2000); 
+    minVolts = analogRead(SERVO_FEEDBACK_PIN) * (3.3 / 1023.0);
+    
+    // set to 90
+    flightServo.write(90); 
+    delay(2000); 
+    maxVolts = analogRead(SERVO_FEEDBACK_PIN) * (3.3 / 1023.0);
+    
+    // set back to zero
+    flightServo.write(0);
+    delay(1500); 
+    Serial.println("Calibration Complete. Locked at 0.");
+
+  } else {
+    Serial.println("Servo Offline! Check wiring.");
+    printOLED("Servo Offline!\nCheck wiring.", true);
+    digitalWrite(ERR_LED_PIN, HIGH);
+    delay(500);
+    digitalWrite(ERR_LED_PIN, LOW);
+    error = true;
+  }
  
 
 //SGP40
@@ -209,12 +239,10 @@ void systemUpdate(){
   raw_servo_adc = analogRead(SERVO_FEEDBACK_PIN); //read voltage
   servoFeedbackVolts = raw_servo_adc * (3.3 / 1023.0); // reading to voltage
   //calibration
-  float minVolts = 0.5; // voltage at 0
-  float maxVolts = 2.5; // voltage at 180
   
   // calculate the physical angle
   servoFeedbackVolts = constrain(servoFeedbackVolts, minVolts, maxVolts);
-  servoActualAngle = (servoFeedbackVolts - minVolts) * (180.0 / (maxVolts - minVolts));
+  servoActualAngle = (servoFeedbackVolts - minVolts) * (90.0 / (maxVolts - minVolts));
 
 
   // rotate
