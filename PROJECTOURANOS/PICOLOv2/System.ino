@@ -179,6 +179,13 @@ void systemSetup() {
   if (error){
     digitalWrite(ERR_LED_PIN, HIGH);
   }
+
+  //MUX
+  pinMode(MUX_SIG_PIN, INPUT);
+  pinMode(MUX_S0, OUTPUT);
+  pinMode(MUX_S1, OUTPUT);
+  pinMode(MUX_S2, OUTPUT);
+
 }
 
 // System wide update function. Updates all sensors.
@@ -260,15 +267,27 @@ void systemUpdate(){
   }
 
   //OZONE
-  // read analog value
-  raw_o3_vgas = analogRead(O3_VGAS_PIN);
-  raw_o3_vref = analogRead(O3_VREF_PIN);
-  raw_o3_vtemp = analogRead(O3_VTEMP_PIN);
-  
-  // convert to voltage
+
+  //read analog from mux
+  raw_o3_vgas = readMux(O3_VGAS_CHAN);
+  raw_o3_vref = readMux(O3_VREF_CHAN);
+  raw_o3_vtemp = readMux(O3_VTEMP_CHAN);
+
+//convert to voltage
   o3_vgas_volts = raw_o3_vgas * (3.3 / 1023.0);
   o3_vref_volts = raw_o3_vref * (3.3 / 1023.0);
   o3_vtemp_volts = raw_o3_vtemp * (3.3 / 1023.0);
+
+  //    // read analog value
+  // raw_o3_vgas = analogRead(O3_VGAS_PIN);
+  // raw_o3_vref = analogRead(O3_VREF_PIN);
+  // raw_o3_vtemp = analogRead(O3_VTEMP_PIN);
+  
+  // // convert to voltage
+  // o3_vgas_volts = raw_o3_vgas * (3.3 / 1023.0);
+  // o3_vref_volts = raw_o3_vref * (3.3 / 1023.0);
+  // o3_vtemp_volts = raw_o3_vtemp * (3.3 / 1023.0);
+
 
 }
 
@@ -286,4 +305,12 @@ String timeToHhmmss(int milli) {
   char timeStr[20];
   sprintf(timeStr, "%02d:%02d:%02d", hours, mins, secs);
   return String(timeStr);
+}
+
+int readMux(byte channel) {
+  digitalWrite(MUX_S0, bitRead(channel, 0));
+  digitalWrite(MUX_S1, bitRead(channel, 1));
+  digitalWrite(MUX_S2, bitRead(channel, 2));
+  delayMicroseconds(20); 
+  return analogRead(MUX_SIG_PIN);
 }

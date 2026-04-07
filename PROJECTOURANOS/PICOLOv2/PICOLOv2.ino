@@ -39,7 +39,7 @@ bool usingM8N = true; // true for M8N, false for M9N
 
 // File header. Edit to add columns for other sensors.
 
-String header = "hh:mm:ss,T(min),T(s),T(ms),Counts/Cycle,Totalhits,Hits/Second,Methane(V),ServoOutput,Servo(V),ServoDeg,Raw_O3_Gas,O3_Gas(V),Raw_O3_Ref,O3_Ref(V),Raw_O3_Temp,O3_Temp(V),Hz,Batt (V),Fix Type,PVT,Sats,Date,Time,Lat,Lon,Alt(Ft),Alt(M),HorizAccuracy(MM),VertAccuracy(MM),VertVel(Ft/S),VertVel(M/S),ECEFstat,ECEFX(M),ECEFY(M),ECEFZ(M),NedVelNorth(M/S),NedVelEast(M/S),NedVelDown(M/S),GndSpd(M/S),Head(Deg),PDOP,ExtT(F),ExtT(C),ExtT(RK),IntT(F),IntT(C),IntT(RK),Pa,kPa,ATM,PSI,density(kg/m^3),MSTemp(C),MSTemp(F),MSTemp(RK),MS Alt SL(Ft), MS Alt SL(M),MS Alt Rel(Ft),MS Alt Rel(M),VertVel(ft/s),VertVel(m/s),Accel(x),Accel(y),Accel(z),Deg/S(x),Deg/S(y),Deg/S(z),Ori(x),Ori(y),Ori(z),Mag_T(x),Mag_T(y),Mag_T(z)z,Version:" + String(VERSION);
+String header = "hh:mm:ss,T(min),T(s),T(ms),Counts/Cycle,Totalhits,Hits/Second,Methane(V),ServoOutput,Servo(V),ServoDeg,VOC_Index,Raw_O3_Gas,O3_Gas(V),Raw_O3_Ref,O3_Ref(V),Raw_O3_Temp,O3_Temp(V),Hz,Batt (V),Fix Type,PVT,Sats,Date,Time,Lat,Lon,Alt(Ft),Alt(M),HorizAccuracy(MM),VertAccuracy(MM),VertVel(Ft/S),VertVel(M/S),ECEFstat,ECEFX(M),ECEFY(M),ECEFZ(M),NedVelNorth(M/S),NedVelEast(M/S),NedVelDown(M/S),GndSpd(M/S),Head(Deg),PDOP,ExtT(F),ExtT(C),ExtT(RK),IntT(F),IntT(C),IntT(RK),Pa,kPa,ATM,PSI,density(kg/m^3),MSTemp(C),MSTemp(F),MSTemp(RK),MS Alt SL(Ft), MS Alt SL(M),MS Alt Rel(Ft),MS Alt Rel(M),VertVel(ft/s),VertVel(m/s),Accel(x),Accel(y),Accel(z),Deg/S(x),Deg/S(y),Deg/S(z),Ori(x),Ori(y),Ori(z),Mag_T(x),Mag_T(y),Mag_T(z)z,Version:" + String(VERSION);
 
 void setup() {
 
@@ -97,7 +97,8 @@ void loop() {
     data.concat(",");
 
     //SGP40
-    
+    data.concat(String(voc_index));
+    data.concat(",");
 
     //OZONE
     data.concat(String(raw_o3_vgas));

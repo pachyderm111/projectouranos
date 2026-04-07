@@ -178,14 +178,31 @@ SGP40 sgp40;
 int voc_index = 0;
 
 //OZONE
-#define O3_VGAS_PIN 28// change pin
-#define O3_VREF_PIN 28// change pin
-#define O3_VTEMP_PIN 28// change pin
+#define MUX_SIG_PIN 26
+#define MUX_S0 10
+#define MUX_S1 11
+#define MUX_S2 12
+//channels
+#define O3_VGAS_CHAN 0
+#define O3_VREF_CHAN 1
+#define O3_VTEMP_CHAN 2
+
 int raw_o3_vgas = 0;
 int raw_o3_vref = 0;
 int raw_o3_vtemp = 0;
 float o3_vgas_volts = 0.0;
 float o3_vref_volts = 0.0;
 float o3_vtemp_volts = 0.0;
+
+//BACKUP OZONE
+// #define O3_VGAS_PIN 28// change pin
+// #define O3_VREF_PIN 28// change pin
+// #define O3_VTEMP_PIN 28// change pin
+// int raw_o3_vgas = 0;
+// int raw_o3_vref = 0;
+// int raw_o3_vtemp = 0;
+// float o3_vgas_volts = 0.0;
+// float o3_vref_volts = 0.0;
+// float o3_vtemp_volts = 0.0;
 
 
