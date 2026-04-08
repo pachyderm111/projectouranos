@@ -179,9 +179,9 @@ int voc_index = 0;
 
 //OZONE
 #define MUX_SIG_PIN 26
-#define MUX_S0 10
-#define MUX_S1 11
-#define MUX_S2 12
+#define MUX_S0 11
+#define MUX_S1 12
+#define MUX_S2 13
 //channels
 #define O3_VGAS_CHAN 0
 #define O3_VREF_CHAN 1
