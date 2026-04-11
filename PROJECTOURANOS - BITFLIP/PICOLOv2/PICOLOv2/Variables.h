@@ -160,9 +160,10 @@ int hitsPerCycle = 0;
 //float mq9b_sensor_voltage = 0.0;
 
 //SERVO
-#define SERVO_PIN 8
+#define SERVO_PIN 10
 Servo flightServo; 
 int servoPosition = 0;
+#define SERVO_FEEDBACK_PIN 27
 int raw_servo_adc = 0;
 float servoFeedbackVolts = 0.0;
 float servoActualAngle = 0.0;
@@ -177,7 +178,7 @@ SGP40 sgp40;
 int voc_index = 0;
 
 //OZONE
-#define MUX_SIG_PIN 28
+#define MUX_SIG_PIN 26
 #define MUX_S0 11
 #define MUX_S1 12
 #define MUX_S2 13
@@ -185,7 +186,6 @@ int voc_index = 0;
 #define O3_VGAS_CHAN 0
 #define O3_VREF_CHAN 1
 #define O3_VTEMP_CHAN 2
-#define SERVO_FEEDBACK_CHAN 3
 
 int raw_o3_vgas = 0;
 int raw_o3_vref = 0;

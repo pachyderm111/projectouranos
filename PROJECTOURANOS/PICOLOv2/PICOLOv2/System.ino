@@ -109,9 +109,9 @@ void systemSetup() {
     //pinMode(MQ9B_PIN, INPUT);
 
     //SERVO
-   
+    pinMode(SERVO_FEEDBACK_PIN, INPUT);
 
-    flightServo.attach(SERVO_PIN);
+  // flightServo.attach(SERVO_PIN);
   // flightServo.write(0); // Set to 0 degrees
   // delay(5000);
   // Serial.println("Servo Attached");
@@ -128,12 +128,12 @@ void systemSetup() {
     // set to zero
     flightServo.write(0); 
     delay(2000); 
-    minVolts = readMux(SERVO_FEEDBACK_CHAN) * (3.3 / 1023.0);
+    minVolts = analogRead(SERVO_FEEDBACK_PIN) * (3.3 / 1023.0);
     
     // set to 90
     flightServo.write(90); 
     delay(2000); 
-    maxVolts = readMux(SERVO_FEEDBACK_CHAN) * (3.3 / 1023.0);
+    maxVolts = analogRead(SERVO_FEEDBACK_PIN) * (3.3 / 1023.0);
     
     // set back to zero
     flightServo.write(0);
@@ -163,12 +163,6 @@ void systemSetup() {
     error = true;
   }
 
-    //MUX
-  pinMode(MUX_SIG_PIN, INPUT);
-  pinMode(MUX_S0, OUTPUT);
-  pinMode(MUX_S1, OUTPUT);
-  pinMode(MUX_S2, OUTPUT);
-
 
   SDsetup(dataFilename, dataFileN1, dataFileN2);
   logData(header, dataFilename);
@@ -185,6 +179,13 @@ void systemSetup() {
   if (error){
     digitalWrite(ERR_LED_PIN, HIGH);
   }
+
+  //MUX
+  pinMode(MUX_SIG_PIN, INPUT);
+  pinMode(MUX_S0, OUTPUT);
+  pinMode(MUX_S1, OUTPUT);
+  pinMode(MUX_S2, OUTPUT);
+
 }
 
 // System wide update function. Updates all sensors.
@@ -242,7 +243,7 @@ void systemUpdate(){
   voc_index = sgp40.getVOCindex();
 
   //SERVO
-  raw_servo_adc = readMux(SERVO_FEEDBACK_CHAN);//read voltage
+  raw_servo_adc = analogRead(SERVO_FEEDBACK_PIN); //read voltage
   servoFeedbackVolts = raw_servo_adc * (3.3 / 1023.0); // reading to voltage
   //calibration
   
