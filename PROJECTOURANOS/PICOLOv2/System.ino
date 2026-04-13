@@ -17,6 +17,7 @@ void systemSetup() {
   Wire1.setSCL(I2C_1_SCL);
   Wire1.setSDA(I2C_1_SDA);
   Wire1.begin(); // default I2C clock
+  
 
   beginOLED(); 
 
@@ -128,13 +129,13 @@ void systemSetup() {
     // set to zero
     flightServo.write(0); 
     delay(2000); 
-    minVolts = readMux(SERVO_FEEDBACK_CHAN) * (3.3 / 1023.0);
-    
+    //minVolts = readMux(SERVO_FEEDBACK_CHAN) * (3.3 / 1023.0);
+    minVolts = analogRead(SERVO_FEEDBACK_PIN) * (3.3 / 1023.0);
     // set to 90
     flightServo.write(90); 
     delay(2000); 
-    maxVolts = readMux(SERVO_FEEDBACK_CHAN) * (3.3 / 1023.0);
-    
+   // maxVolts = readMux(SERVO_FEEDBACK_CHAN) * (3.3 / 1023.0);
+   maxVolts = analogRead(SERVO_FEEDBACK_PIN) * (3.3 / 1023.0);
     // set back to zero
     flightServo.write(0);
     delay(1500); 
@@ -164,10 +165,23 @@ void systemSetup() {
   }
 
     //MUX
-  pinMode(MUX_SIG_PIN, INPUT);
+//  pinMode(MUX_SIG_PIN, INPUT);
   pinMode(MUX_S0, OUTPUT);
   pinMode(MUX_S1, OUTPUT);
   pinMode(MUX_S2, OUTPUT);
+
+  //TEMP AND HUMIDITY
+  if (sht30.begin(0x44)) { 
+    Serial.println("SHT30 Online!");
+    printOLED("SHT30 Online!", true);
+  } else {
+    Serial.println("SHT30 Offline! Check wiring.");
+    printOLED("SHT30 Offline!\nCheck wiring.", true);
+    digitalWrite(ERR_LED_PIN, HIGH);
+    delay(500);
+    digitalWrite(ERR_LED_PIN, LOW);
+    error = true;
+  }
 
 
   SDsetup(dataFilename, dataFileN1, dataFileN2);
@@ -242,7 +256,8 @@ void systemUpdate(){
   voc_index = sgp40.getVOCindex();
 
   //SERVO
-  raw_servo_adc = readMux(SERVO_FEEDBACK_CHAN);//read voltage
+  //raw_servo_adc = readMux(SERVO_FEEDBACK_CHAN);//read voltage
+  raw_servo_adc = analogRead(SERVO_FEEDBACK_PIN);
   servoFeedbackVolts = raw_servo_adc * (3.3 / 1023.0); // reading to voltage
   //calibration
   
@@ -287,9 +302,10 @@ void systemUpdate(){
   // o3_vref_volts = raw_o3_vref * (3.3 / 1023.0);
   // o3_vtemp_volts = raw_o3_vtemp * (3.3 / 1023.0);
 
-
+// --- SHT30 Shell Sensor Update ---
+  shellTempC = sht30.readTemperature();
+  shellHumid = sht30.readHumidity();
 }
-
 
 
 // Function to convert timer to HHMMSS format 
@@ -310,6 +326,8 @@ int readMux(byte channel) {
   digitalWrite(MUX_S0, bitRead(channel, 0));
   digitalWrite(MUX_S1, bitRead(channel, 1));
   digitalWrite(MUX_S2, bitRead(channel, 2));
+//  digitalWrite(MUX_S3, bitRead(channel, 3));
   delayMicroseconds(20); 
-  return analogRead(MUX_SIG_PIN);
+//  return analogRead(MUX_SIG_PIN);
+return 0;
 }

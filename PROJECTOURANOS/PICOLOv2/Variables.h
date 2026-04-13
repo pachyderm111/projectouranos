@@ -160,7 +160,8 @@ int hitsPerCycle = 0;
 //float mq9b_sensor_voltage = 0.0;
 
 //SERVO
-#define SERVO_PIN 8
+#define SERVO_PIN 10
+#define SERVO_FEEDBACK_PIN 28
 Servo flightServo; 
 int servoPosition = 0;
 int raw_servo_adc = 0;
@@ -169,7 +170,7 @@ float servoActualAngle = 0.0;
 float minVolts = 0.0;
 float maxVolts = 0.0;
 unsigned long prevServoTime = 0;
-const unsigned long servoInterval = 5000;  // 5 min = 300000
+const unsigned long servoInterval = 300000;  // 5 min = 300000
 bool servoAt90 = false;
 
 //SGP40
@@ -177,7 +178,7 @@ SGP40 sgp40;
 int voc_index = 0;
 
 //OZONE
-#define MUX_SIG_PIN 28
+//#define MUX_SIG_PIN 28
 #define MUX_S0 11
 #define MUX_S1 12
 #define MUX_S2 13
@@ -204,5 +205,11 @@ float o3_vtemp_volts = 0.0;
 // float o3_vgas_volts = 0.0;
 // float o3_vref_volts = 0.0;
 // float o3_vtemp_volts = 0.0;
+
+// --- SHT30 Shell Temp & Humidity Variables ---
+Adafruit_SHT31 sht30 = Adafruit_SHT31();
+
+float shellTempC = 0.0;
+float shellHumid = 0.0;
 
 
